@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:latest
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=demo
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '3306:3306'
+    volumes:
+      - ${PWD}/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - spring-cloud-network
+  app:
+    image: openjdk:8-jdk-alpine
+    ports:
+      - '8080:8080'
+    volumes:
+      - ${PWD}/demo-0.0.1-SNAPSHOT.jar:/demo-0.0.1-SNAPSHOT.jar
+    command: java -jar /demo-0.0.1-SNAPSHOT.jar
+    networks:
+      - spring-cloud-network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/demo
+networks:
+    spring-cloud-network:
+        driver: bridge
