@@ -1,6 +1,10 @@
 
 # MybatisPlus多租户插件SQL注入
 
+[Engilsh](./Readme.en.md)
+
+---
+
 ## 1. 漏洞总结
 
 威胁：SQL注入
@@ -23,8 +27,6 @@ MavenArtifactId：mybatis-plus
     - （3.0.x, 3.1.x, 3.3.x）com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler#getTenantId
     - （3.4.x, 3.5.x）com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler#getTenantId
 3. 应用程序没有对租户id值做过滤处理
-
-修复建议：无
 
 
 
@@ -100,3 +102,10 @@ beforeQuery:70, TenantLineInnerInterceptor (com.baomidou.mybatisplus.extension.p
 intercept:78, MybatisPlusInterceptor (com.baomidou.mybatisplus.extension.plugins)
 
 ![Pasted image 20230201154503.png](./images/Pasted%20image%2020230201154503.png)
+
+
+## 4. 修复建议
+
+官方是大概率不会修复这个漏洞的，如果你正在使用 MybatisPlus 的租户插件并且租户id是外部可控，请根据自身系统具体情况做好过滤、检查等。
+
+如果你想知道官方为什么不修复这个漏洞，可以看看 [后记](./%E5%90%8E%E8%AE%B0.md)

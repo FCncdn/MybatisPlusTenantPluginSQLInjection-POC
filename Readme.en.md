@@ -1,6 +1,10 @@
 
 # MybatisPlusTenantPluginSQLInjection
 
+[中文](./Readme.md)
+
+---
+
 ## 1. Vulnerability Summary
 
 Threat: SQL Injection
@@ -87,3 +91,8 @@ beforeQuery:70, TenantLineInnerInterceptor (com.baomidou.mybatisplus.extension.p
 intercept:78, MybatisPlusInterceptor (com.baomidou.mybatisplus.extension.plugins)
 
 ![Pasted image 20230201154503.png](./images/Pasted%20image%2020230201154503.png)
+
+
+## 4. Restoration Suggestions
+
+It is unlikely that this vulnerability will be fixed, so if you are using the MybatisPlus tenant plugin and the tenant id is externally controllable, please do your own filtering, checking, etc. as appropriate for your system.
